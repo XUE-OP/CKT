@@ -1,0 +1,1159 @@
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线下活动 - CKT</title>
+    <!-- 引入CSS样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* 活动页面特定样式 */
+        .activities-main {
+            padding: 40px 0;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .page-title-section {
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 标签页样式 */
+        .tabs-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: #1954b0;
+            background-color: white;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .tab:hover {
+            color: #1954b0;
+            background-color: rgba(25, 84, 176, 0.05);
+        }
+        
+        /* 标签内容区域 */
+        .tab-content {
+            padding: 30px;
+        }
+        
+        .tab-pane {
+            display: none;
+        }
+        
+        .tab-pane.active {
+            display: block;
+        }
+        
+        /* 活动卡片网格 */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+        
+        /* 活动卡片样式 */
+        .activity-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        /* 活动资讯板块的卡片样式 */
+        #events .activity-card {
+            background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+            border: 1px solid #c8e6c9;
+            color: #333;
+        }
+        
+        #events .activity-card:hover {
+            border-color: #8fd3f4;
+        }
+        
+        #events .activity-card .activity-title {
+            color: #11998e;
+        }
+        
+        /* 往期活动板块的卡片样式 */
+        #past .activity-card {
+            background: linear-gradient(135deg, #f8f5fa 0%, #f0f4f8 100%);
+            border: 1px solid #e9e4f0;
+            color: #333;
+        }
+        
+        #past .activity-card:hover {
+            border-color: #a6c1ee;
+        }
+        
+        #past .activity-card .activity-title {
+            color: #8e44ad;
+        }
+        
+        #past .activity-card .activity-description {
+            color: #555;
+        }
+        
+        #past .activity-card .activity-date,
+        #past .activity-card .activity-time,
+        #past .activity-card .activity-location,
+        #past .activity-card .activity-organizer {
+            color: #8e44ad;
+        }
+        
+        #events .activity-card .activity-description {
+            color: #555;
+        }
+        
+        #events .activity-card .activity-date,
+        #events .activity-card .activity-time,
+        #events .activity-card .activity-location,
+        #events .activity-card .activity-organizer {
+            color: #11998e;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border-color: #667eea;
+        }
+        
+        /* 新闻卡片特殊样式 */
+        .news-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            border-left: 4px solid #667eea;
+            color: #333;
+        }
+        
+        .news-card .activity-title {
+            color: #1954b0;
+        }
+        
+        .news-card .activity-description {
+            color: #555;
+        }
+        
+        .news-card .activity-date {
+            color: #667eea;
+        }
+        
+        /* 新闻类型标签 */
+        .news-type-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #1954b0 0%, #667eea 100%);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 活动卡片内容 */
+        .activity-card-content {
+            padding: 24px;
+        }
+        
+        /* 活动日期 */
+        .activity-date {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 活动标题 */
+        .activity-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        /* 活动描述 */
+        .activity-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* 活动按钮组 */
+        .activity-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .activity-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-detail {
+            background-color: transparent;
+            color: #667eea;
+            border: 1px solid #667eea;
+        }
+        
+        .btn-detail:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-register {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 活动地点 */
+        .activity-location {
+            font-size: 14px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 活动时间 */
+        .activity-time {
+            font-size: 14px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        /* 活动主办方 */
+        .activity-organizer {
+            font-size: 14px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        /* 活动状态标签 */
+        .activity-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .status-upcoming {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        
+        .status-active {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+        
+        .status-ended {
+            background-color: rgba(149, 165, 166, 0.1);
+            color: #95a5a6;
+        }
+        
+        /* 活动详情页 */
+        .activity-detail {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .activity-detail-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .activity-detail-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 16px;
+        }
+        
+        .activity-detail-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .activity-detail-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .activity-detail-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .activity-detail-content p {
+            margin-bottom: 20px;
+        }
+        
+        .activity-detail-content h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin: 30px 0 20px;
+        }
+        
+        .activity-detail-content h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 25px 0 15px;
+        }
+        
+        /* 活动图片 */
+        .activity-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        /* 活动统计信息 */
+        .activity-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .activity-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 活动标签 */
+        .activity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .activity-tag {
+            background-color: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        /* 活动分享 */
+        .activity-share {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .share-btn {
+            background-color: transparent;
+            color: #667eea;
+            border: 1px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .share-btn:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="activities-page">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo-container">
+                    <img src="images/未标题-2.png" width="45" height="45">
+                    <h1 class="logo-text">CKT</h1>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html">课程中心</a></li>
+                <li><a href="forum.html">备考论坛</a></li>
+                <li><a href="activities.html" class="active">线下活动</a></li>
+                <li><a href="resources.html">资源工具箱</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="search-box-nav">
+                    <input type="text" placeholder="搜索..." class="search-input-nav">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="user-avatar">
+                    <span>👤</span>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <!-- 标题部分 -->
+    <section class="page-title-section">
+        <div class="container">
+            <h1 class="page-title">线下活动</h1>
+            <p class="page-subtitle">城市便景亮了一盏微光，如同少年不惧岁月长</p>
+        </div>
+    </section>
+    
+    <main class="activities-main">
+        <div class="container">
+            <!-- 标签页容器 -->
+            <div class="tabs-container">
+                <!-- 标签页导航 -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="news">最新资讯</button>
+                    <button class="tab" data-tab="events">活动资讯</button>
+                    <button class="tab" data-tab="past">往期活动</button>
+                </div>
+                
+                <!-- 标签页内容 -->
+                <div class="tab-content">
+                    <!-- 最新资讯 -->
+                    <div class="tab-pane active" id="news">
+                        <div class="activities-grid">
+                            <!-- 新闻1：考试报名 -->
+                            <div class="activity-card news-card">
+                                <div class="activity-card-content">
+                                    <div class="news-type-tag">考试报名</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.09.08
+                                    </div>
+                                    <h3 class="activity-title">2025年12月四六级考试报名开始</h3>
+                                    <p class="activity-description">
+                                        2025年12月全国大学英语四、六级考试（CET）报名工作已开始，请同学们登录报名系统完成报名。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 新闻2：考试安排 -->
+                            <div class="activity-card news-card">
+                                <div class="activity-card-content">
+                                    <div class="news-type-tag">考试安排</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.09.12
+                                    </div>
+                                    <h3 class="activity-title">2025年12月四六级考试时间确定</h3>
+                                    <p class="activity-description">
+                                        2025年12月四六级考试时间已确定，四级考试时间为12月13日上午9:00-11:20，六级考试时间为12月13日下午15:00-17:25。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 新闻3：备考指导 -->
+                            <div class="activity-card news-card">
+                                <div class="activity-card-content">
+                                    <div class="news-type-tag">备考指导</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.09.10
+                                    </div>
+                                    <h3 class="activity-title">四六级备考指导讲座即将举行</h3>
+                                    <p class="activity-description">
+                                        为帮助同学们更好地备考2025年12月四六级考试，学校将举办备考指导讲座，邀请资深教师分享备考经验和技巧。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 新闻4：成绩查询 -->
+                            <div class="activity-card news-card">
+                                <div class="activity-card-content">
+                                    <div class="news-type-tag">成绩查询</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.08.16
+                                    </div>
+                                    <h3 class="activity-title">2025年6月四六级成绩查询开始</h3>
+                                    <p class="activity-description">
+                                        2025年6月全国大学英语四、六级考试成绩已公布，请同学们登录报名系统查询成绩。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 新闻5：高分经验 -->
+                            <div class="activity-card news-card">
+                                <div class="activity-card-content">
+                                    <div class="news-type-tag">高分经验</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.09.05
+                                    </div>
+                                    <h3 class="activity-title">六级680分学霸分享备考经验</h3>
+                                    <p class="activity-description">
+                                        我校2021级学生张明在2025年6月六级考试中取得680分的优异成绩，他将分享自己的备考计划、学习方法和应试技巧。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 新闻6：活动预告 -->
+                            <div class="activity-card news-card">
+                                <div class="activity-card-content">
+                                    <div class="news-type-tag">活动预告</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.09.25
+                                    </div>
+                                    <h3 class="activity-title">四六级备考冲刺班即将开班</h3>
+                                    <p class="activity-description">
+                                        为帮助同学们备战12月考试，学习中心将于10月1日开设四六级备考冲刺班，邀请资深教师授课，名额有限，欲报从速。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动资讯 -->
+                    <div class="tab-pane" id="events">
+                        <div class="activities-grid">
+                            <!-- 活动1：英语角 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-upcoming">即将开始</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.11.25
+                                    </div>
+                                    <h3 class="activity-title">每周英语角：文化交流与口语练习</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        19:00-21:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        学校图书馆4楼自习教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        艺术与传媒学院学生会
+                                    </div>
+                                    <p class="activity-description">
+                                        每周英语角活动，邀请外国留学生和英语爱好者共同参与，通过主题讨论、游戏互动等方式提高英语口语能力，了解不同国家的文化。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                        <a href="#" class="activity-btn btn-register">
+                                            <i class="fa fa-user-plus"></i> 立即报名
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动2：听力训练 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-upcoming">即将开始</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.11.15
+                                    </div>
+                                    <h3 class="activity-title">四六级听力训练工作坊</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        14:30-16:30
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        求是楼A3 201教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        英语学习中心
+                                    </div>
+                                    <p class="activity-description">
+                                        针对四六级听力部分的专项训练工作坊，通过真题演练、技巧讲解、模拟测试等方式帮助同学们提高听力理解能力和应试技巧。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                        <a href="#" class="activity-btn btn-register">
+                                            <i class="fa fa-user-plus"></i> 立即报名
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动3：写作指导 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-upcoming">即将开始</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.10.29
+                                    </div>
+                                    <h3 class="activity-title">四六级写作指导讲座</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        10:00-12:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        学术报告厅
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        教务处、人文学院
+                                    </div>
+                                    <p class="activity-description">
+                                        邀请资深英语教师讲解四六级写作技巧、评分标准和常见错误，帮助同学们提高写作水平，掌握应试策略。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                        <a href="#" class="activity-btn btn-register">
+                                            <i class="fa fa-user-plus"></i> 立即报名
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动4：模拟考试 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-upcoming">即将开始</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.10.10
+                                    </div>
+                                    <h3 class="activity-title">四六级模拟考试</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        09:00-11:20（四级）/15:00-17:25（六级）
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        教学主楼各教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        艺术与传媒学院、教务处
+                                    </div>
+                                    <p class="activity-description">
+                                        全真模拟四六级考试，按照实际考试流程和评分标准进行，帮助同学们熟悉考试环境，检验学习成果，发现不足之处。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                        <a href="#" class="activity-btn btn-register">
+                                            <i class="fa fa-user-plus"></i> 立即报名
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动5：词汇竞赛 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-upcoming">即将开始</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2024.09.29
+                                    </div>
+                                    <h3 class="activity-title">四六级词汇竞赛</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        14:00-16:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        图书馆二楼201教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        人文学院、学生会
+                                    </div>
+                                    <p class="activity-description">
+                                        通过趣味竞赛的方式帮助同学们记忆四六级词汇，提高词汇量。竞赛设有个人赛和团体赛，获胜者将获得精美奖品。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                        <a href="#" class="activity-btn btn-register">
+                                            <i class="fa fa-user-plus"></i> 立即报名
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动6：翻译工作坊 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-upcoming">即将开始</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.09.25
+                                    </div>
+                                    <h3 class="activity-title">四六级翻译工作坊</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        19:00-21:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        图书馆3楼会议室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        翻译协会
+                                    </div>
+                                    <p class="activity-description">
+                                        针对四六级翻译部分的专项训练，讲解翻译技巧、文化背景知识和常见表达方式，通过实践练习提高翻译能力。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                        <a href="#" class="activity-btn btn-register">
+                                            <i class="fa fa-user-plus"></i> 立即报名
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 往期活动 -->
+                    <div class="tab-pane" id="past">
+                        <div class="activities-grid">
+                            <!-- 活动1：备考讲座 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-ended">已结束</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.03.01
+                                    </div>
+                                    <h3 class="activity-title">2025年6月四六级备考指导讲座</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        14:30-16:30
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        学术报告厅
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        艺术与传媒学院
+                                    </div>
+                                    <p class="activity-description">
+                                        邀请资深英语教师讲解四六级考试改革趋势、备考策略和应试技巧，帮助同学们制定科学的备考计划。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动2：口语比赛 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-ended">已结束</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.02.25
+                                    </div>
+                                    <h3 class="activity-title">校园英语口语比赛</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        14:00-17:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        博学楼A1 307教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        校团委、艺术与传媒学院
+                                    </div>
+                                    <p class="activity-description">
+                                        校园英语口语比赛，分为初赛、复赛和决赛三个阶段，通过命题演讲、即兴演讲等环节选拔优秀选手，提高同学们的英语口语表达能力。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动3：听力讲座 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-ended">已结束</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.04.20
+                                    </div>
+                                    <h3 class="activity-title">四六级听力提分讲座</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        19:00-21:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        求是楼A3 101教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        教务处
+                                    </div>
+                                    <p class="activity-description">
+                                        专门针对四六级听力部分的提分讲座，讲解听力技巧、题型分析和解题方法，帮助同学们突破听力难关。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动4：写作比赛 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-ended">已结束</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.04.15
+                                    </div>
+                                    <h3 class="activity-title">四六级写作比赛</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        14:00-16:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        教学主楼各教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        艺术与传媒学院、写作协会
+                                    </div>
+                                    <p class="activity-description">
+                                        四六级写作比赛，按照实际考试要求和评分标准进行，帮助同学们提高写作水平，积累写作经验。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动5：词汇讲座 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-ended">已结束</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.04.10
+                                    </div>
+                                    <h3 class="activity-title">四六级词汇记忆方法讲座</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        19:00-21:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        图书馆4楼307教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        词汇学习协会
+                                    </div>
+                                    <p class="activity-description">
+                                        讲解科学有效的词汇记忆方法，帮助同学们快速扩大词汇量，提高词汇运用能力，为四六级考试打下坚实基础。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活动6：翻译比赛 -->
+                            <div class="activity-card">
+                                <div class="activity-card-content">
+                                    <div class="activity-status status-ended">已结束</div>
+                                    <div class="activity-date">
+                                        <i class="fa fa-calendar"></i>
+                                        2025.04.05
+                                    </div>
+                                    <h3 class="activity-title">四六级翻译比赛</h3>
+                                    <div class="activity-time">
+                                        <i class="fa fa-clock-o"></i>
+                                        14:00-16:00
+                                    </div>
+                                    <div class="activity-location">
+                                        <i class="fa fa-map-marker"></i>
+                                        求是楼A3 201教室
+                                    </div>
+                                    <div class="activity-organizer">
+                                        <i class="fa fa-user"></i>
+                                        翻译协会、外语学院
+                                    </div>
+                                    <p class="activity-description">
+                                        四六级翻译比赛，考察同学们的翻译能力和跨文化交际能力，帮助同学们提高翻译水平，熟悉翻译题型。
+                                    </p>
+                                    <div class="activity-buttons">
+                                        <a href="#" class="activity-btn btn-detail">
+                                            <i class="fa fa-eye"></i> 查看详情
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- 品牌和联系方式 -->
+            <div class="footer-brand-section">
+                <div class="footer-brand">
+                    <div class="logo-container">
+                        <img src="images/未标题-2.png" width="45" height="45">
+                        <h3 class="logo-text">CKT</h3>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    专属城科的四六级学习平台，为您提供优质的备考资源和交流环境
+                </p>
+                <div class="footer-contact">
+                    
+                </div>
+                <!-- 社交媒体链接 -->
+                
+            </div>
+            
+            <!-- 快速链接 -->
+            <div class="footer-links-container">
+                <div class="footer-links-group">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa fa-home"></i> 首页</a></li>
+                        <li><a href="courses.html"><i class="fa fa-book"></i> 课程中心</a></li>
+                        <li><a href="forum.html"><i class="fa fa-comments"></i> 备考论坛</a></li>
+                        <li><a href="activities.html"><i class="fa fa-calendar"></i> 线下活动</a></li>
+                        <li><a href="resources.html"><i class="fa fa-wrench"></i> 资源工具箱</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 学习资源 -->
+                <div class="footer-links-group">
+                    <h4>学习资源</h4>
+                    <ul>
+                        <li><a href="resources.html"><i class="fa fa-file-text"></i> 真题资料</a></li>
+                        <li><a href="resources.html"><i class="fa fa-book"></i> 词汇语法</a></li>
+                        <li><a href="resources.html"><i class="fa fa-headphones"></i> 听力素材</a></li>
+                        <li><a href="resources.html"><i class="fa fa-pencil"></i> 写作模板</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 关于我们 -->
+                <div class="footer-links-group">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-info-circle"></i> 平台介绍</a></li>
+                        <li><a href="#"><i class="fa fa-users"></i> 团队成员</a></li>
+                        <li><a href="#"><i class="fa fa-handshake-o"></i> 合作联系</a></li>
+                        <li><a href="#"><i class="fa fa-shield"></i> 隐私政策</a></li>
+                        <li><a href="#"><i class="fa fa-file-text-o"></i> 使用条款</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部版权信息 -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 CKT. 保留所有权利.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+    <!-- 引入JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // 标签页切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有标签页按钮
+            const tabs = document.querySelectorAll('.tab');
+            // 获取所有标签页内容
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            // 为每个标签页按钮添加点击事件
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 获取当前标签页的数据属性
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // 移除所有标签页按钮的活跃状态
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // 移除所有标签页内容的活跃状态
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    
+                    // 为当前点击的标签页按钮添加活跃状态
+                    this.classList.add('active');
+                    // 为对应的标签页内容添加活跃状态
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

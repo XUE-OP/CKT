@@ -1,0 +1,47 @@
+/* 活动回顾 */
+.review-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.review-photos {
+    margin-bottom: 1.5rem;
+}
+
+.review-photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.review-photo-large {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+.review-photo-small {
+    grid-row: 2;
+}
+
+.review-articles {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .review-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .review-photos {
+        margin-bottom: 0;
+    }
+    
+    .review-articles {
+        gap: 2rem;
+    }
+}

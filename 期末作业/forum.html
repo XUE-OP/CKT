@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>备考论坛 - CKT</title>
+    <!-- 引入CSS样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* 论坛页面特定样式 */
+        .forum-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        /* 论坛头部 */
+        .forum-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .forum-header h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .forum-header p {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        /* 论坛内容区域 */
+        .forum-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* 帖子列表 */
+        .posts-list {
+            flex: 1;
+            min-width: 600px;
+        }
+        
+        .post-item {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 为每个帖子设置统一的渐变背景效果 */
+        .posts-list .post-item {
+            background: linear-gradient(130deg, #b3d9ff 0%, #ffffff 100%);
+        }
+        
+        /* 为每个帖子设置不同的渐变背景效果 */
+        .posts-list .post-item:nth-child(2) {
+            background: linear-gradient(135deg, #99d2f8 0%, #ffffff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(3) {
+            background: linear-gradient(140deg, #8ce3d4 0%, #ffffff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(4) {
+            background: linear-gradient(125deg, #c6d9ff 0%, #e6f0ff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(5) {
+            background: linear-gradient(130deg, #ffcce6 0%, #ffffff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(6) {
+            background: linear-gradient(135deg, #fff299 0%, #ffffff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(7) {
+            background: linear-gradient(140deg, #b3ffdf 0%, #ffffff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(8) {
+            background: linear-gradient(125deg, #e6ccff 0%, #ffffff 100%);
+        }
+        
+        .posts-list .post-item:nth-child(9) {
+            background: linear-gradient(130deg, #ffdab3 0%, #ffffff 100%);
+        }
+        
+        /* 为第10个帖子设置渐变背景效果 */
+        .posts-list .post-item:nth-child(10) {
+            background: linear-gradient(135deg, #b3ffcc 0%, #ffffff 100%);
+        }
+        
+        .post-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px 0 0 12px;
+        }
+        
+        .post-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border-color: #667eea;
+        }
+        
+        .post-item:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .post-meta {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .post-content {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .post-tags {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        /* 侧边栏 */
+        .forum-sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-section {
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 热门话题 */
+        .hot-icon {
+            color: #ff6b6b;
+        }
+        
+        .hot-topics {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .hot-topic-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        
+        .hot-topic-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .hot-topic-item a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            flex: 1;
+            transition: color 0.3s ease;
+        }
+        
+        .hot-topic-item a:hover {
+            color: #1954b0;
+        }
+        
+        .hot-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ff6b6b;
+            flex-shrink: 0;
+        }
+        
+        .hot-topic-item.hot-level-5 .hot-indicator {
+            background-color: #ff6b6b;
+            box-shadow: 0 0 10px #ff6b6b;
+        }
+        
+        .hot-topic-item.hot-level-4 .hot-indicator {
+            background-color: #ffa502;
+            box-shadow: 0 0 8px #ffa502;
+        }
+        
+        .hot-topic-item.hot-level-3 .hot-indicator {
+            background-color: #ffd700;
+            box-shadow: 0 0 6px #ffd700;
+        }
+        
+        .hot-topic-item.hot-level-2 .hot-indicator {
+            background-color: #98fb98;
+            box-shadow: 0 0 4px #98fb98;
+        }
+        
+        .hot-topic-item.hot-level-1 .hot-indicator {
+            background-color: #87ceeb;
+            box-shadow: 0 0 2px #87ceeb;
+        }
+        
+        .hot-score {
+            font-size: 12px;
+            color: #ff6b6b;
+            font-weight: bold;
+            background-color: rgba(255, 107, 107, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        /* 在线用户 */
+        .online-icon {
+            color: #2ecc71;
+        }
+        
+        .online-users {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .online-user-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            gap: 10px;
+        }
+        
+        .online-user-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .avatar-color-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .avatar-color-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .avatar-color-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .avatar-color-4 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .avatar-color-5 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        
+        .online-status {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        .online-status.online {
+            background-color: #2ecc71;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .user-activity {
+            display: block;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* 学习小组 */
+        .group-icon {
+            color: #3498db;
+        }
+        
+        .study-groups {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .group-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .group-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .group-info {
+            flex: 1;
+        }
+        
+        .group-name {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+        
+        .group-name:hover {
+            color: #1954b0;
+        }
+        
+        .group-members {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .group-activity {
+            margin-left: 10px;
+        }
+        
+        .activity-badge {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        .activity-badge.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        
+        .activity-badge.very-active {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+        
+        /* 发布新帖按钮 */
+        .create-post-btn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff9770 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.35);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .create-post-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.5);
+        }
+        
+        .create-post-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+        
+        .create-post-btn i {
+            font-size: 20px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* 查看更多链接 */
+        .view-more {
+            margin-top: 15px;
+            text-align: right;
+            padding-top: 15px;
+            border-top: 1px solid #f8f9fa;
+        }
+        
+        .view-more a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .view-more a:hover {
+            color: #144593;
+        }
+        
+        .view-more-sidebar {
+            margin-top: 15px;
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #f8f9fa;
+        }
+        
+        .view-more-sidebar a {
+            color: #1954b0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .view-more-sidebar a:hover {
+            color: #144593;
+        }
+        
+        /* 帖子内容增强样式 */
+        .post-tip {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+        }
+        
+        .post-tip i {
+            color: #ffc107;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .post-tip strong {
+            color: #856404;
+        }
+        
+        .post-list {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+        
+        .post-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 8px;
+        }
+        
+        .post-list li::before {
+            content: '•';
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body class="forum-page">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo-container">
+                    <img src="images/未标题-2.png" width="45" height="45">
+                    <h1 class="logo-text">CKT</h1>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html">课程中心</a></li>
+                <li><a href="forum.html" class="active">备考论坛</a></li>
+                <li><a href="activities.html">线下活动</a></li>
+                <li><a href="resources.html">资源工具箱</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="search-box-nav">
+                    <input type="text" placeholder="搜索..." class="search-input-nav">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="user-avatar">
+                    <span>👤</span>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-title-section">
+        <div class="container">
+            <h1 class="page-title">备考论坛</h1>
+            <p class="page-subtitle">与四六级备考相关的交流平台，分享学习经验与资源</p>
+        </div>
+    </section>
+
+    <!-- 论坛容器 -->
+    <div class="forum-container">
+        <!-- 论坛内容区域 -->
+        <div class="forum-content">
+            <!-- 帖子列表 -->
+            <div class="posts-list">
+                <!-- 发布新帖按钮 -->
+                <button class="create-post-btn">
+                    <i class="fa fa-plus"></i> 发布新帖
+                </button>
+                
+                <!-- 帖子1 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">六级听力备考经验分享：如何提高正确率</div>
+                        <div class="post-meta">
+                            <span class="user">学习达人小明</span>
+                            <span class="time">2小时前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>最近一直在备考六级，听力部分总是拖后腿，经过一段时间的练习，终于找到一些有效的方法。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>我的备考秘诀：</strong>
+                            <ul class="post-list">
+                                <li>每天精听1篇真题听力，反复听3遍</li>
+                                <li>练习速记关键词和数字，培养抓重点能力</li>
+                                <li>积累听力场景词汇，提高反应速度</li>
+                                <li>利用碎片时间听VOA/BBC，磨耳朵</li>
+                            </ul>
+                        </div>
+                        <p>这些方法让我的听力分数从160分提升到了220分，希望对大家有帮助！</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 128</span>
+                            <span><i class="fa fa-comment"></i> 25</span>
+                            <span><i class="fa fa-thumbs-up"></i> 42</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">听力</span>
+                            <span class="tag">备考经验</span>
+                            <span class="tag">六级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子2 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四级阅读技巧：如何快速定位答案</div>
+                        <div class="post-meta">
+                            <span class="user">英语学霸小红</span>
+                            <span class="time">5小时前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>四级阅读题量很大，很多同学都做不完。今天我想分享一些快速定位答案的技巧，帮助大家提高做题速度和正确率。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>阅读技巧总结：</strong>
+                            <ul class="post-list">
+                                <li>先看题目后看文章，带着问题找答案</li>
+                                <li>圈出题目中的关键词（名词、动词、数字等）</li>
+                                <li>扫读文章，定位关键词出现的位置</li>
+                                <li>仔细阅读关键词所在的上下文</li>
+                                <li>对比选项，排除干扰项</li>
+                            </ul>
+                        </div>
+                        <p>通过这些方法，我的阅读速度从每分钟100词提升到了每分钟180词，正确率也从60%提高到了85%。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 245</span>
+                            <span><i class="fa fa-comment"></i> 38</span>
+                            <span><i class="fa fa-thumbs-up"></i> 67</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">阅读</span>
+                            <span class="tag">技巧</span>
+                            <span class="tag">四级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子3 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">六级写作高分模板：议论文结构解析</div>
+                        <div class="post-meta">
+                            <span class="user">写作专家小李</span>
+                            <span class="time">8小时前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>六级写作中，议论文是最常考的类型。掌握好的议论文结构，可以让你的文章条理清晰，得分更高。今天我来分享一个高分写作模板。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>议论文高分结构：</strong>
+                            <ul class="post-list">
+                                <li>开头段：引出话题+点明观点（3-4句话）</li>
+                                <li>主体段1：第一个论点+论据支撑（5-6句话）</li>
+                                <li>主体段2：第二个论点+论据支撑（5-6句话）</li>
+                                <li>主体段3：反方观点+反驳（4-5句话）</li>
+                                <li>结尾段：总结观点+升华主题（3-4句话）</li>
+                            </ul>
+                        </div>
+                        <p>使用这个结构，我的写作分数从120分提升到了180分。记得要多练习，灵活运用模板而不是死记硬背。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 189</span>
+                            <span><i class="fa fa-comment"></i> 27</span>
+                            <span><i class="fa fa-thumbs-up"></i> 53</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">写作</span>
+                            <span class="tag">模板</span>
+                            <span class="tag">六级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子4 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四级翻译备考：如何准确翻译中国特色词汇</div>
+                        <div class="post-meta">
+                            <span class="user">翻译大神小张</span>
+                            <span class="time">1天前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>四级翻译经常会出现一些中国特色词汇，比如"太极拳"、"剪纸"、"春节"等。这些词汇的翻译是很多同学的难点，今天我来分享一些翻译技巧。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>特色词汇翻译技巧：</strong>
+                            <ul class="post-list">
+                                <li>查阅官方翻译：使用《中国日报》等权威媒体的翻译</li>
+                                <li>意译法：如果不知道直译，可以采用意译</li>
+                                <li>组合翻译：将词汇拆分成几个部分，分别翻译后组合</li>
+                                <li>积累常见词汇：考前积累高频中国特色词汇</li>
+                                <li>注意文化背景：理解词汇的文化内涵后再翻译</li>
+                            </ul>
+                        </div>
+                        <p>通过这些方法，我在翻译部分的得分从80分提升到了130分。建议大家平时多积累，多练习。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 156</span>
+                            <span><i class="fa fa-comment"></i> 22</span>
+                            <span><i class="fa fa-thumbs-up"></i> 41</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">翻译</span>
+                            <span class="tag">词汇</span>
+                            <span class="tag">四级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子5 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四六级词汇记忆法：如何高效背单词</div>
+                        <div class="post-meta">
+                            <span class="user">词汇达人小王</span>
+                            <span class="time">2天前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>词汇是英语学习的基础，也是四六级考试的重点。很多同学觉得背单词很枯燥，效率低下。今天我来分享几种高效的词汇记忆方法。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>高效记忆方法：</strong>
+                            <ul class="post-list">
+                                <li>词根词缀记忆法：通过词根词缀理解单词构成</li>
+                                <li>联想记忆法：将单词与图片、故事等联系起来</li>
+                                <li>语境记忆法：在句子和文章中记忆单词</li>
+                                <li>艾宾浩斯遗忘曲线：按照遗忘规律复习单词</li>
+                                <li>分类记忆法：将单词按照主题分类记忆</li>
+                            </ul>
+                        </div>
+                        <p>使用这些方法，我每天可以记住100-150个单词，而且遗忘率很低。建议大家结合使用多种方法，找到最适合自己的记忆方式。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 312</span>
+                            <span><i class="fa fa-comment"></i> 45</span>
+                            <span><i class="fa fa-thumbs-up"></i> 78</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">词汇</span>
+                            <span class="tag">记忆</span>
+                            <span class="tag">备考</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子6 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四六级考试时间管理：如何在规定时间内完成所有题目</div>
+                        <div class="post-meta">
+                            <span class="user">考试达人小陈</span>
+                            <span class="time">3天前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>四六级考试时间紧张，很多同学因为时间管理不当而没有完成所有题目。今天我来分享一些时间管理技巧，帮助大家在规定时间内完成考试。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>时间管理技巧：</strong>
+                            <ul class="post-list">
+                                <li>熟悉考试流程：提前了解每个部分的时间分配</li>
+                                <li>模拟考试：按照实际考试时间进行模拟练习</li>
+                                <li>先易后难：遇到难题先跳过，做完容易的题目再回来</li>
+                                <li>控制答题时间：每道题设置时间上限，超时就跳过</li>
+                                <li>预留涂卡时间：最后留出10-15分钟涂卡和检查</li>
+                            </ul>
+                        </div>
+                        <p>通过这些方法，我每次考试都能顺利完成所有题目，并且有时间检查。建议大家在考前多进行几次模拟考试，熟悉考试节奏。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 278</span>
+                            <span><i class="fa fa-comment"></i> 33</span>
+                            <span><i class="fa fa-thumbs-up"></i> 62</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">时间管理</span>
+                            <span class="tag">考试技巧</span>
+                            <span class="tag">备考</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子7 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四六级口语备考技巧：如何在口语考试中脱颖而出</div>
+                        <div class="post-meta">
+                            <span class="user">口语达人小杨</span>
+                            <span class="time">4天前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>很多同学觉得口语考试很难，但其实只要掌握正确的方法，就能在口语考试中取得好成绩。今天我来分享一些口语备考的技巧。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>口语备考技巧：</strong>
+                            <ul class="post-list">
+                                <li>每天练习30分钟：保持口腔肌肉的灵活性</li>
+                                <li>模仿录音：模仿标准发音和语调</li>
+                                <li>积累话题素材：准备常见话题的回答框架</li>
+                                <li>练习即兴表达：随机抽取话题进行练习</li>
+                                <li>参加模拟考试：熟悉考试流程和评分标准</li>
+                            </ul>
+                        </div>
+                        <p>通过这些方法，我的口语成绩从B+提升到了A+。建议大家多开口练习，不要害怕犯错。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 198</span>
+                            <span><i class="fa fa-comment"></i> 29</span>
+                            <span><i class="fa fa-thumbs-up"></i> 57</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">口语</span>
+                            <span class="tag">技巧</span>
+                            <span class="tag">备考</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子8 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四六级备考心态调整：如何保持良好的学习状态</div>
+                        <div class="post-meta">
+                            <span class="user">心理辅导老师小张</span>
+                            <span class="time">5天前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>备考过程中，良好的心态非常重要。很多同学因为压力过大而影响学习效率，今天我来分享一些心态调整的方法。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>心态调整方法：</strong>
+                            <ul class="post-list">
+                                <li>制定合理目标：避免过高或过低的目标</li>
+                                <li>分解学习任务：将大任务分解为小任务</li>
+                                <li>保持规律作息：充足的睡眠有助于提高学习效率</li>
+                                <li>适当放松：学习之余进行一些放松活动</li>
+                                <li>积极自我暗示：相信自己能够取得好成绩</li>
+                            </ul>
+                        </div>
+                        <p>通过这些方法，我帮助很多同学调整了备考心态，提高了学习效率。建议大家关注自己的情绪变化，及时调整。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 234</span>
+                            <span><i class="fa fa-comment"></i> 41</span>
+                            <span><i class="fa fa-thumbs-up"></i> 72</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">心态调整</span>
+                            <span class="tag">学习方法</span>
+                            <span class="tag">备考</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子9 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-title">四六级真题解析：如何高效利用历年真题</div>
+                        <div class="post-meta">
+                            <span class="user">考试研究专家小王</span>
+                            <span class="time">6天前</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>历年真题是备考四六级的宝贵资源，很多同学虽然做了真题，但效果不佳。今天我来分享如何高效利用历年真题进行备考。</p>
+                        <div class="post-tip">
+                            <i class="fa fa-lightbulb-o"></i>
+                            <strong>真题利用技巧：</strong>
+                            <ul class="post-list">
+                                <li>按时间顺序做真题：从最近的年份开始做</li>
+                                <li>精做每套真题：不要只追求数量，要注重质量</li>
+                                <li>分析错题原因：找出自己的薄弱环节</li>
+                                <li>总结出题规律：了解考试重点和题型特点</li>
+                                <li>模拟真实考试环境：提高应试能力</li>
+                            </ul>
+                        </div>
+                        <p>通过这些方法，我帮助很多同学在短时间内提高了考试成绩。建议大家把真题做至少3遍，每一遍都有不同的侧重点。</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span><i class="fa fa-eye"></i> 198</span>
+                            <span><i class="fa fa-comment"></i> 32</span>
+                            <span><i class="fa fa-thumbs-up"></i> 56</span>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">真题解析</span>
+                            <span class="tag">备考技巧</span>
+                            <span class="tag">考试策略</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 查看更多按钮 -->
+                <div class="view-more" style="text-align: right; margin-top: 40px;">
+                    <a href="#" class="view-more-btn">查看更多帖子 <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- 侧边栏 -->
+            <div class="forum-sidebar">
+                <!-- 热门话题 -->
+                <div class="sidebar-section">
+                    <h3><i class="fa fa-fire hot-icon"></i> 热门话题</h3>
+                    <ul class="hot-topics">
+                        <li class="hot-topic-item hot-level-5">
+                            <span class="hot-indicator"></span>
+                            <a href="#">2025年12月四级真题解析</a>
+                            <span class="hot-score">95°</span>
+                        </li>
+                        <li class="hot-topic-item hot-level-4">
+                            <span class="hot-indicator"></span>
+                            <a href="#">六级阅读难吗？如何备考？</a>
+                            <span class="hot-score">88°</span>
+                        </li>
+                        <li class="hot-topic-item hot-level-3">
+                            <span class="hot-indicator"></span>
+                            <a href="#">写作模板真的有用吗？</a>
+                            <span class="hot-score">76°</span>
+                        </li>
+                        <li class="hot-topic-item hot-level-2">
+                            <span class="hot-indicator"></span>
+                            <a href="#">听力听不懂怎么办？</a>
+                            <span class="hot-score">65°</span>
+                        </li>
+                        <li class="hot-topic-item hot-level-1">
+                            <span class="hot-indicator"></span>
+                            <a href="#">词汇量不够怎么提高？</a>
+                            <span class="hot-score">58°</span>
+                        </li>
+                    </ul>
+                    <div class="view-more-sidebar">
+                        <a href="#">查看更多话题 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 在线用户 -->
+                <div class="sidebar-section">
+                    <h3><i class="fa fa-users online-icon"></i> 在线用户</h3>
+                    <ul class="online-users">
+                        <li class="online-user-item">
+                            <div class="user-avatar-small avatar-color-1">
+                                <span class="online-status online"></span>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">学习达人小明</span>
+                                <span class="user-activity">在线2小时</span>
+                            </div>
+                        </li>
+                        <li class="online-user-item">
+                            <div class="user-avatar-small avatar-color-2">
+                                <span class="online-status online"></span>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">英语学霸小红</span>
+                                <span class="user-activity">在线5小时</span>
+                            </div>
+                        </li>
+                        <li class="online-user-item">
+                            <div class="user-avatar-small avatar-color-3">
+                                <span class="online-status online"></span>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">写作专家小李</span>
+                                <span class="user-activity">在线1天</span>
+                            </div>
+                        </li>
+                        <li class="online-user-item">
+                            <div class="user-avatar-small avatar-color-4">
+                                <span class="online-status online"></span>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">词汇达人小王</span>
+                                <span class="user-activity">在线3小时</span>
+                            </div>
+                        </li>
+                        <li class="online-user-item">
+                            <div class="user-avatar-small avatar-color-5">
+                                <span class="online-status online"></span>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">翻译大神小张</span>
+                                <span class="user-activity">在线4小时</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="view-more-sidebar">
+                        <a href="#">查看全部用户 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 学习小组 -->
+                <div class="sidebar-section">
+                    <h3><i class="fa fa-group group-icon"></i> 学习小组</h3>
+                    <ul class="study-groups">
+                        <li class="group-item">
+                            <div class="group-info">
+                                <a href="#" class="group-name">四级备考冲刺组</a>
+                                <span class="group-members">128人</span>
+                            </div>
+                            <div class="group-activity">
+                                <span class="activity-badge active">活跃</span>
+                            </div>
+                        </li>
+                        <li class="group-item">
+                            <div class="group-info">
+                                <a href="#" class="group-name">六级听力提升群</a>
+                                <span class="group-members">95人</span>
+                            </div>
+                            <div class="group-activity">
+                                <span class="activity-badge very-active">非常活跃</span>
+                            </div>
+                        </li>
+                        <li class="group-item">
+                            <div class="group-info">
+                                <a href="#" class="group-name">写作互相批改组</a>
+                                <span class="group-members">76人</span>
+                            </div>
+                            <div class="group-activity">
+                                <span class="activity-badge active">活跃</span>
+                            </div>
+                        </li>
+                        <li class="group-item">
+                            <div class="group-info">
+                                <a href="#" class="group-name">词汇打卡群</a>
+                                <span class="group-members">156人</span>
+                            </div>
+                            <div class="group-activity">
+                                <span class="activity-badge very-active">非常活跃</span>
+                            </div>
+                        </li>
+                        <li class="group-item">
+                            <div class="group-info">
+                                <a href="#" class="group-name">翻译交流小组</a>
+                                <span class="group-members">63人</span>
+                            </div>
+                            <div class="group-activity">
+                                <span class="activity-badge active">活跃</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="view-more-sidebar">
+                        <a href="#">查看全部小组 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- 品牌和联系方式 -->
+            <div class="footer-brand-section">
+                <div class="footer-brand">
+                    <div class="logo-container">
+                        <img src="images/未标题-2.png" width="45" height="45">
+                        <h3 class="logo-text">CKT</h3>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    专属城科的四六级学习平台，为您提供优质的备考资源和交流环境
+                </p>
+                <div class="footer-contact">
+                    
+                </div>
+                <!-- 社交媒体链接 -->
+                
+            </div>
+            
+            <!-- 快速链接 -->
+            <div class="footer-links-container">
+                <div class="footer-links-group">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa fa-home"></i> 首页</a></li>
+                        <li><a href="courses.html"><i class="fa fa-book"></i> 课程中心</a></li>
+                        <li><a href="forum.html"><i class="fa fa-comments"></i> 备考论坛</a></li>
+                        <li><a href="activities.html"><i class="fa fa-calendar"></i> 线下活动</a></li>
+                        <li><a href="resources.html"><i class="fa fa-wrench"></i> 资源工具箱</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 学习资源 -->
+                <div class="footer-links-group">
+                    <h4>学习资源</h4>
+                    <ul>
+                        <li><a href="resources.html"><i class="fa fa-file-text"></i> 真题资料</a></li>
+                        <li><a href="resources.html"><i class="fa fa-book"></i> 词汇语法</a></li>
+                        <li><a href="resources.html"><i class="fa fa-headphones"></i> 听力素材</a></li>
+                        <li><a href="resources.html"><i class="fa fa-pencil"></i> 写作模板</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 关于我们 -->
+                <div class="footer-links-group">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-info-circle"></i> 平台介绍</a></li>
+                        <li><a href="#"><i class="fa fa-users"></i> 团队成员</a></li>
+                        <li><a href="#"><i class="fa fa-handshake-o"></i> 合作联系</a></li>
+                        <li><a href="#"><i class="fa fa-shield"></i> 隐私政策</a></li>
+                        <li><a href="#"><i class="fa fa-file-text-o"></i> 使用条款</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部版权信息 -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 CKT. 保留所有权利.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+    <!-- 引入JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // 发布新帖按钮点击事件
+        document.querySelector('.create-post-btn').addEventListener('click', () => {
+            alert('发布新帖功能开发中...');
+        });
+        
+        // 帖子点击事件
+        const postItems = document.querySelectorAll('.post-item');
+        postItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const postTitle = item.querySelector('.post-title').textContent;
+                alert(`查看帖子：${postTitle}`);
+            });
+        });
+    </script>
+</body>
+</html>

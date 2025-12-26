@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索框测试</title>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* 模拟资源页面的搜索框样式 */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 1rem;
+            padding-left: 1rem;
+            padding-right: 3rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        /* 调整后的搜索图标样式 */
+        .search-container .search-icon {
+            position: absolute !important;
+            right: calc(1.5rem - 10px) !important;
+            top: 50%;
+            transform: translateY(calc(-50% - 10px));
+            color: #1954b0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-box" placeholder="搜索四六级备考资源...">
+        <span class="search-icon">🔍</span>
+    </div>
+</body>
+</html>
