@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程中心 - CKT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body class="courses-page">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo-container">
+                    <img src="images/未标题-2.png" width="45" height="45">
+                    <h1 class="logo-text">CKT</h1>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html" class="active">课程中心</a></li>
+                <li><a href="forum.html">备考论坛</a></li>
+                <li><a href="activities.html">线下活动</a></li>
+                <li><a href="resources.html">资源工具箱</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="search-box-nav">
+                    <input type="text" placeholder="搜索..." class="search-input-nav">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="user-avatar">
+                    <span>👤</span>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-title-section">
+        <div class="container">
+            <h1 class="page-title">课程中心</h1>
+            <p class="page-subtitle">专业系统的四六级备考课程，满足不同阶段学习者需求</p>
+        </div>
+    </section>
+
+    <!-- 课程分类 -->
+    <section class="course-categories">
+        <div class="container">
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="all">所有课程</button>
+                <button class="category-btn" data-category="beginner">零基础入门课</button>
+                <button class="category-btn" data-category="specialty">题型专项课</button>
+                <button class="category-btn" data-category="key-points">高分考点课</button>
+                <button class="category-btn" data-category="prediction">考前押题课</button>
+            </div>
+            
+            <!-- 高级筛选 -->
+            <div class="advanced-filters">
+                <div class="filter-group">
+                    <label for="difficulty-filter">难度级别:</label>
+                    <select id="difficulty-filter" class="filter-select">
+                        <option value="all">所有难度</option>
+                        <option value="入门级">入门级</option>
+                        <option value="进阶级">进阶级</option>
+                        <option value="冲刺级">冲刺级</option>
+                        <option value="押题级">押题级</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="duration-filter">课程时长:</label>
+                    <select id="duration-filter" class="filter-select">
+                        <option value="all">所有时长</option>
+                        <option value="short">≤10课时</option>
+                        <option value="medium">11-15课时</option>
+                        <option value="long">≥16课时</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程内容 -->
+    <section class="course-content">
+        <div class="container">
+            <!-- 零基础入门课 -->
+            <div class="course-section" id="beginner">
+                <div class="section-header">
+                    <h2 class="section-title">零基础入门课</h2>
+                    <p class="section-description">针对城科大一新生及英语基础薄弱的用户设计</p>
+                </div>
+                <div class="course-grid">
+                    <div class="course-card" data-level="入门级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">📖</div>
+                            <h3 class="course-card-title">考试常识了解</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>系统了解四六级考试报名流程、考试时间安排、分数分配规则、题型特点分析等常识信息，帮助用户快速建立对四六级考试的认知。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🔰 入门级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="入门级" data-duration="16">
+                        <div class="course-card-header">
+                            <div class="course-icon">📚</div>
+                            <h3 class="course-card-title">英语常识启蒙</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>从零基础开始学习英语基础语法、词汇和听力技能，为四六级考试打下坚实基础，适合完全没有英语常识或基础薄弱的用户。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 16课时</span>
+                                <span class="course-level">🔰 入门级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="入门级" data-duration="12">
+                        <div class="course-card-header">
+                            <div class="course-icon">🔤</div>
+                            <h3 class="course-card-title">英语音标基础</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>系统学习英语48个音标的发音方法和规则，通过大量练习帮助用户掌握正确的发音技巧，为听力和口语学习打下基础。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 12课时</span>
+                                <span class="course-level">🔰 入门级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="入门级" data-duration="14">
+                        <div class="course-card-header">
+                            <div class="course-icon">📝</div>
+                            <h3 class="course-card-title">基础词汇启蒙</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>学习四六级考试中最基础的核心词汇，通过图片、例句等多种方式帮助用户记忆，建立基本的词汇量。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 14课时</span>
+                                <span class="course-level">🔰 入门级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="入门级" data-duration="10">
+                        <div class="course-card-header">
+                            <div class="course-icon">🔤</div>
+                            <h3 class="course-card-title">英语语法基础</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>系统学习英语基础语法知识，包括词类、句子结构、时态等，为英语学习打下坚实的语法基础。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 10课时</span>
+                                <span class="course-level">🔰 入门级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="入门级" data-duration="12">
+                        <div class="course-card-header">
+                            <div class="course-icon">💬</div>
+                            <h3 class="course-card-title">英语口语入门</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>学习基础英语口语表达，包括日常对话、问候语、简单交流等，帮助用户建立英语口语自信。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 12课时</span>
+                                <span class="course-level">🔰 入门级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 题型专项课 -->
+            <div class="course-section" id="specialty">
+                <div class="section-header">
+                    <h2 class="section-title">题型专项课</h2>
+                    <p class="section-description">针对四六级考试各类题型进行专项训练，提升解题能力</p>
+                </div>
+                <div class="course-grid">
+                    <div class="course-card" data-level="进阶级" data-duration="12">
+                        <div class="course-card-header">
+                            <div class="course-icon">👂</div>
+                            <h3 class="course-card-title">听力专项训练</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>详细讲解听力考试题型特点和解题技巧，通过大量真题练习提升听力理解能力，帮助考生在听力部分取得高分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 12课时</span>
+                                <span class="course-level">📈 进阶级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="进阶级" data-duration="14">
+                        <div class="course-card-header">
+                            <div class="course-icon">📝</div>
+                            <h3 class="course-card-title">阅读理解技巧</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>系统讲解阅读理解各种题型的解题方法和技巧，包括快速阅读、仔细阅读等，帮助考生提高阅读速度和理解能力。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 14课时</span>
+                                <span class="course-level">📈 进阶级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="进阶级" data-duration="10">
+                        <div class="course-card-header">
+                            <div class="course-icon">✍️</div>
+                            <h3 class="course-card-title">写作模板应用</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>提供实用的写作模板和高分句型，讲解写作结构和逻辑，帮助考生在写作部分快速组织语言，提高写作水平。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 10课时</span>
+                                <span class="course-level">📈 进阶级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="进阶级" data-duration="10">
+                        <div class="course-card-header">
+                            <div class="course-icon">💬</div>
+                            <h3 class="course-card-title">翻译技巧提升</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>讲解汉英翻译的基本技巧和方法，分析常见翻译错误，提供大量翻译练习，帮助考生提高翻译能力和准确性。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 10课时</span>
+                                <span class="course-level">📈 进阶级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="进阶级" data-duration="12">
+                        <div class="course-card-header">
+                            <div class="course-icon">📊</div>
+                            <h3 class="course-card-title">信息匹配技巧</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>专门针对四六级考试中的信息匹配题型进行讲解，教授快速定位关键词和信息的方法，提高答题效率和准确率。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 12课时</span>
+                                <span class="course-level">📈 进阶级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="进阶级" data-duration="11">
+                        <div class="course-card-header">
+                            <div class="course-icon">🔢</div>
+                            <h3 class="course-card-title">选词填空训练</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>详细讲解选词填空题型的解题技巧，包括词汇辨析、语法结构分析等，通过大量练习帮助考生提高该题型的得分率。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 11课时</span>
+                                <span class="course-level">📈 进阶级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 高分考点课 -->
+            <div class="course-section" id="key-points">
+                <div class="section-header">
+                    <h2 class="section-title">高分考点课</h2>
+                    <p class="section-description">深入讲解四六级考试的重点和难点，帮助考生突破高分瓶颈</p>
+                </div>
+                <div class="course-grid">
+                    <div class="course-card" data-level="冲刺级" data-duration="16">
+                        <div class="course-card-header">
+                            <div class="course-icon">🔑</div>
+                            <h3 class="course-card-title">核心词汇突破</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>精选四六级考试高频核心词汇，通过词根词缀记忆法和语境记忆法，帮助考生快速扩充词汇量，提高词汇运用能力。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 16课时</span>
+                                <span class="course-level">🚀 冲刺级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="冲刺级" data-duration="14">
+                        <div class="course-card-header">
+                            <div class="course-icon">📚</div>
+                            <h3 class="course-card-title">语法知识梳理</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>系统梳理四六级考试必备的语法知识，重点讲解语法难点和易错点，通过大量练习帮助考生掌握语法规则。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 14课时</span>
+                                <span class="course-level">🚀 冲刺级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="冲刺级" data-duration="15">
+                        <div class="course-card-header">
+                            <div class="course-icon">📈</div>
+                            <h3 class="course-card-title">高分写作攻略</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>深入讲解四六级写作高分技巧，包括如何构建逻辑结构、如何使用高级词汇和句型、如何避免常见错误等，帮助考生在写作部分取得高分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 15课时</span>
+                                <span class="course-level">🚀 冲刺级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="冲刺级" data-duration="16">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">听力高分策略</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>分析听力考试中的高分考点和难点，教授如何预测答案、如何抓住关键信息等技巧，通过模拟训练帮助考生提高听力得分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 16课时</span>
+                                <span class="course-level">🚀 冲刺级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="冲刺级" data-duration="15">
+                        <div class="course-card-header">
+                            <div class="course-icon">📖</div>
+                            <h3 class="course-card-title">阅读高分技巧</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>深入讲解四六级阅读考试的高分技巧，包括快速定位、信息提炼、推理判断等方法，通过大量真题训练帮助考生提高阅读得分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 15课时</span>
+                                <span class="course-level">🚀 冲刺级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="冲刺级" data-duration="14">
+                        <div class="course-card-header">
+                            <div class="course-icon">🌐</div>
+                            <h3 class="course-card-title">翻译高分策略</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>系统讲解四六级翻译考试的高分策略，包括汉英转换技巧、文化词汇处理、长句翻译方法等，帮助考生在翻译部分取得高分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 14课时</span>
+                                <span class="course-level">🚀 冲刺级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 考前押题课 -->
+            <div class="course-section" id="prediction">
+                <div class="section-header">
+                    <h2 class="section-title">考前押题课</h2>
+                    <p class="section-description">考前精准押题，帮助考生在最后阶段快速提分</p>
+                </div>
+                <div class="course-grid">
+                    <div class="course-card" data-level="押题级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">听力押题预测</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>根据考试趋势和历年真题特点，预测本年度听力考试重点和可能出现的题型，帮助考生针对性复习。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🎯 押题级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="押题级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">写作押题预测</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>预测本年度写作考试可能出现的话题和题型，提供针对性的写作模板和高分句型，帮助考生在写作部分取得高分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🎯 押题级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="押题级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">阅读押题预测</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>根据考试命题规律，预测本年度阅读理解考试的重点话题和题型，提供针对性的解题技巧和模拟训练。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🎯 押题级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="押题级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">翻译押题预测</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>预测本年度翻译考试可能出现的话题和难点，提供针对性的翻译技巧和模拟练习，帮助考生在翻译部分取得高分。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🎯 押题级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="押题级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">词汇押题预测</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>根据历年真题和考试趋势，预测本年度考试中可能出现的高频词汇和短语，提供针对性的记忆方法和练习，帮助考生高效备考。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🎯 押题级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card" data-level="押题级" data-duration="8">
+                        <div class="course-card-header">
+                            <div class="course-icon">🎯</div>
+                            <h3 class="course-card-title">综合押题模拟</h3>
+                        </div>
+                        <div class="course-card-body">
+                            <p>提供完整的模拟考试，包含所有题型的押题内容，严格按照考试时间和要求设计，帮助考生熟悉考试流程，提高应试能力。</p>
+                        </div>
+                        <div class="course-card-footer">
+                            <div class="course-meta">
+                                <span class="course-duration">⏱️ 8课时</span>
+                                <span class="course-level">🎯 押题级</span>
+                            </div>
+                            <button class="course-enroll-btn">立即学习</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- 品牌和联系方式 -->
+            <div class="footer-brand-section">
+                <div class="footer-brand">
+                    <div class="logo-container">
+                        <img src="images/未标题-2.png" width="45" height="45">
+                        <h3 class="logo-text">CKT</h3>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    专属城科的四六级学习平台，为您提供优质的备考资源和交流环境
+                </p>
+                <div class="footer-contact">
+                    
+                </div>
+                <!-- 社交媒体链接 -->
+                
+            </div>
+            
+            <!-- 快速链接 -->
+            <div class="footer-links-container">
+                <div class="footer-links-group">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa fa-home"></i> 首页</a></li>
+                        <li><a href="courses.html"><i class="fa fa-book"></i> 课程中心</a></li>
+                        <li><a href="forum.html"><i class="fa fa-comments"></i> 备考论坛</a></li>
+                        <li><a href="activities.html"><i class="fa fa-calendar"></i> 线下活动</a></li>
+                        <li><a href="resources.html"><i class="fa fa-wrench"></i> 资源工具箱</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 学习资源 -->
+                <div class="footer-links-group">
+                    <h4>学习资源</h4>
+                    <ul>
+                        <li><a href="resources.html"><i class="fa fa-file-text"></i> 真题资料</a></li>
+                        <li><a href="resources.html"><i class="fa fa-book"></i> 词汇语法</a></li>
+                        <li><a href="resources.html"><i class="fa fa-headphones"></i> 听力素材</a></li>
+                        <li><a href="resources.html"><i class="fa fa-pencil"></i> 写作模板</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 关于我们 -->
+                <div class="footer-links-group">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-info-circle"></i> 平台介绍</a></li>
+                        <li><a href="#"><i class="fa fa-users"></i> 团队成员</a></li>
+                        <li><a href="#"><i class="fa fa-handshake-o"></i> 合作联系</a></li>
+                        <li><a href="#"><i class="fa fa-shield"></i> 隐私政策</a></li>
+                        <li><a href="#"><i class="fa fa-file-text-o"></i> 使用条款</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部版权信息 -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 CKT. 保留所有权利.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+    <script>
+        // 课程分类切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const courseSections = document.querySelectorAll('.course-section');
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            
+
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // 为当前按钮添加active类
+                    this.classList.add('active');
+                    
+                    const targetCategory = this.dataset.category;
+                    
+                    // 显示或隐藏课程分类
+                    if (targetCategory === 'all') {
+                        // 显示所有课程分类
+                        courseSections.forEach(section => {
+                            section.style.display = 'block';
+                        });
+                    } else {
+                        // 隐藏所有课程分类
+                        courseSections.forEach(section => {
+                            section.style.display = 'none';
+                        });
+                        // 显示目标课程分类
+                        const targetSection = document.getElementById(targetCategory);
+                        targetSection.style.display = 'block';
+
+                    }
+                });
+            });
+            
+
+            
+            // 高级筛选功能
+            const difficultyFilter = document.getElementById('difficulty-filter');
+            const durationFilter = document.getElementById('duration-filter');
+            const courseCards = document.querySelectorAll('.course-card');
+            
+            function applyFilters() {
+                const selectedDifficulty = difficultyFilter.value;
+                const selectedDuration = durationFilter.value;
+                
+                courseCards.forEach(card => {
+                    const cardDifficulty = card.dataset.level;
+                    const cardDuration = parseInt(card.dataset.duration);
+                    
+                    let showCard = true;
+                    
+                    // 应用难度筛选
+                    if (selectedDifficulty !== 'all' && cardDifficulty !== selectedDifficulty) {
+                        showCard = false;
+                    }
+                    
+                    // 应用时长筛选
+                    if (selectedDuration !== 'all') {
+                        if (selectedDuration === 'short' && cardDuration > 10) {
+                            showCard = false;
+                        } else if (selectedDuration === 'medium' && (cardDuration <= 10 || cardDuration > 15)) {
+                            showCard = false;
+                        } else if (selectedDuration === 'long' && cardDuration < 16) {
+                            showCard = false;
+                        }
+                    }
+                    
+                    card.style.display = showCard ? 'block' : 'none';
+                });
+            }
+            
+            // 为筛选器添加事件监听器
+            difficultyFilter.addEventListener('change', applyFilters);
+            durationFilter.addEventListener('change', applyFilters);
+            
+            // 立即学习按钮点击事件
+            document.querySelectorAll('.course-enroll-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const courseTitle = this.closest('.course-card').querySelector('.course-card-title').textContent;
+                    alert(`正在打开课程：${courseTitle}`);
+                    // 这里可以添加实际的课程学习逻辑
+                });
+            });
+            
+            // 响应式导航栏
+            document.querySelector('.nav-toggle').addEventListener('click', function() {
+                document.querySelector('.nav-menu').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

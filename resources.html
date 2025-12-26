@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源工具箱 - CKT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* 资源工具箱页面特定样式 */
+        body.resources-page {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 页面标题区域样式 */
+        .page-title-section {
+            margin-top: 30px;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resources-main {
+            padding: 20px 0;
+        }
+
+        /* 搜索框样式 */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 1rem;
+            padding-left: 1rem !important;
+            padding-right: 3rem !important;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .search-box:focus {
+            border-color: #1954b0;
+            box-shadow: 0 0 0 0.2rem rgba(25, 84, 176, 0.25);
+        }
+
+        /* 只应用于页面特定搜索框的搜索图标样式 */
+        .search-container .search-icon {
+            position: absolute !important;
+            right: calc(1.5rem - -40px) !important;
+            top: 50%;
+            transform: translateY(calc(-50% - 22px));
+            color: #1954b0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .popular-searches {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .popular-searches a {
+            color: #1954b0;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        .popular-searches a:hover {
+            text-decoration: underline;
+        }
+
+        /* 轮播图样式 */
+        .carousel-container {
+            /* 移除白色背景 */
+            background: none;
+            /* 移除阴影和圆角 */
+            box-shadow: none;
+            border-radius: 0;
+            /* 保持内边距但调整 */
+            padding: 2rem 0;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .carousel-content {
+            flex: 1;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            text-align: left;
+            width: 100%;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-item .image-placeholder {
+            /* 让图片完全显示 */
+            width: 250px;
+            height: auto;
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-radius: 16px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #1954b0;
+            flex-shrink: 0;
+        }
+
+        .carousel-item-content {
+            flex: 1;
+        }
+
+        .carousel-item h3 {
+            font-size: 2rem;
+            color: #343a40;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .carousel-item p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .view-details-btn {
+            background: #1954b0;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .view-details-btn:hover {
+            background: #15438a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 84, 176, 0.3);
+        }
+
+        /* 美化轮播箭头 */
+        .carousel-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(25, 84, 176, 0.1);
+            border: 2px solid #1954b0;
+            color: #1954b0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .carousel-arrow:hover {
+            background: #1954b0;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(25, 84, 176, 0.3);
+        }
+
+        .carousel-arrow.prev {
+            left: 2rem;
+        }
+
+        .carousel-arrow.next {
+            right: 2rem;
+        }
+
+        /* 资源分类筛选 */
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #343a40;
+            white-space: nowrap;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .filter-btn:hover {
+            border-color: #1954b0;
+            color: #1954b0;
+            background: rgba(25, 84, 176, 0.05);
+        }
+
+        .filter-btn.active {
+            background: #1954b0;
+            color: white;
+            border-color: #1954b0;
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: #e9ecef;
+            border-color: #ced4da;
+        }
+
+        /* 资源卡片网格 */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            max-height: 888px;
+            overflow: hidden;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            filter: brightness(1.05);
+        }
+        
+        .resource-card:hover .resource-title {
+            color: #1565c0;
+            font-weight: 700;
+            transform: scale(1.05);
+        }
+
+        .resource-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e8f4ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #1565c0;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover .resource-image {
+            transform: scale(1.02);
+        }
+
+        .resource-info {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .resource-title {
+            font-size: 1.15rem;
+            color: #2196f3;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* 分页控件 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: white;
+            border: 2px solid #1954b0;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #1954b0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .page-btn.active {
+            background: #1954b0;
+            color: white;
+            border-color: #1954b0;
+            box-shadow: 0 4px 12px rgba(25, 84, 176, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .page-btn:hover:not(.active):not(:disabled) {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-color: #1954b0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(25, 84, 176, 0.2);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .resource-image {
+                height: 150px;
+            }
+            
+            .resource-card {
+                min-height: 230px;
+            }
+            
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            /* 分页按钮响应式设计 */
+            .page-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+            
+            .pagination {
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body class="resources-page">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo-container">
+                    <img src="images/未标题-2.png" width="45" height="45">
+                    <h1 class="logo-text">CKT</h1>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html">课程中心</a></li>
+                <li><a href="forum.html">备考论坛</a></li>
+                <li><a href="activities.html">线下活动</a></li>
+                <li><a href="resources.html" class="active">资源工具箱</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="search-box-nav">
+                    <input type="text" placeholder="搜索..." class="search-input-nav">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="user-avatar">
+                    <span>👤</span>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="resources-main">
+        <!-- 页面标题和搜索区 -->
+        <section class="page-title-section">
+            <div class="container">
+                <h1 class="page-title">资源工具箱</h1>
+                <p class="page-subtitle">专业的四六级备考资源，满足不同阶段学习者需求</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- 搜索区 -->
+            <div class="search-container" style="margin-top: 20px;">
+                <input type="text" class="search-box" placeholder="搜索四六级备考资源...">
+                <span class="search-icon">🔍</span>
+                <div class="popular-searches">
+                    热门搜索：
+                    <a href="#">四级词汇</a>
+                    <a href="#">六级真题</a>
+                    <a href="#">听力素材</a>
+                    <a href="#">写作模板</a>
+                </div>
+            </div>
+
+            <!-- 今日份推荐 -->
+            <section class="carousel-container">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #1954b0; font-size: 1.8rem;">今日份推荐</h2>
+                <div class="carousel">
+                    <div class="carousel-content">
+                        <div class="carousel-item">
+                            <img src="images/5.png" alt="四六级书籍" class="image-placeholder" style="object-fit: contain;">
+                            <div class="carousel-item-content">
+                                <h3>六级词汇星火式巧记速记</h3>
+                                <p>以星火式记忆法为核心，通过 “词根 + 词缀” 的构词规律拆解单词，同时关联同根词、形近词、近义词与反义词，帮助考生建立词汇网络，摆脱孤立记词的低效模式。
+内容紧贴六级考纲，筛选高频核心词汇，搭配真题例句、考点解析、固定搭配，兼顾记忆与应试应用，减少冗余词汇负担。
+附加实用功能，比如易混词辨析、记忆口诀、便携记忆清单等，适配不同学习场景，方便碎片化积累与考前突击。</p>
+                                <button class="view-details-btn">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 资源分类筛选 -->
+            <section class="filter-section">
+                <div class="filter-group">
+                    <span class="filter-label">考试类型：</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn" data-filter="cet4">四级</button>
+                        <button class="filter-btn" data-filter="cet6">六级</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">资源类型：</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-resource-type="all">全部</button>
+                        <button class="filter-btn" data-resource-type="vocabulary">词汇语法</button>
+                        <button class="filter-btn" data-resource-type="listening">听力素材</button>
+                        <button class="filter-btn" data-resource-type="past-papers">真题合集</button>
+                        <button class="filter-btn" data-resource-type="writing">写作翻译</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">年份：</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-year="all">全部</button>
+                        <button class="filter-btn" data-year="2024">2024</button>
+                        <button class="filter-btn" data-year="2023">2023</button>
+                        <button class="filter-btn" data-year="2022">2022</button>
+                        <button class="filter-btn" data-year="2021">2021</button>
+                        <button class="filter-btn" data-year="2020">2020</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 资源卡片网格 -->
+            <section class="resources-grid">
+                <!-- 词汇语法资源 -->
+                <div class="resource-card" data-type="cet4" data-resource-type="vocabulary" data-year="2024">
+                    <img src="images/6.png" alt="四级核心词汇" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">四级核心词汇</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="vocabulary" data-year="2024">
+                    <img src="images/5.png" alt="六级高频词汇" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">六级高频词汇</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="vocabulary" data-year="2023">
+                    <img src="images/6.png" alt="四级语法精讲" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">四级语法精讲</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="vocabulary" data-year="2023">
+                    <img src="images/5.png" alt="六级语法难点" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">六级语法难点</h3>
+                    </div>
+                </div>
+
+                
+                <!-- 听力素材资源 -->
+                <div class="resource-card" data-type="cet4" data-resource-type="listening" data-year="2024">
+                    <img src="images/12.png" alt="四级听力真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">四级听力真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="listening" data-year="2024">
+                    <img src="images/11.png" alt="六级听力真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">六级听力真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="listening" data-year="2023">
+                    <img src="images/12.png" alt="四级听力训练" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">四级听力训练</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="listening" data-year="2023">
+                    <img src="images/11.png" alt="六级听力训练" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">六级听力训练</h3>
+                    </div>
+                </div>
+
+                
+                <!-- 真题合集资源 -->
+                <div class="resource-card" data-type="cet4" data-resource-type="past-papers" data-year="2024">
+                    <img src="images/14.png" alt="2024四级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2024四级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="past-papers" data-year="2024">
+                    <img src="images/13.png" alt="2024六级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2024六级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="past-papers" data-year="2023">
+                    <img src="images/14.png" alt="2023四级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2023四级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="past-papers" data-year="2023">
+                    <img src="images/13.png" alt="2023六级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2023六级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="past-papers" data-year="2022">
+                    <img src="images/14.png" alt="2022四级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2022四级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="past-papers" data-year="2022">
+                    <img src="images/13.png" alt="2022六级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2022六级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="past-papers" data-year="2021">
+                    <img src="images/14.png" alt="2021四级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2021四级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="past-papers" data-year="2021">
+                    <img src="images/13.png" alt="2021六级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2021六级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="past-papers" data-year="2020">
+                    <img src="images/14.png" alt="2020四级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2020四级真题</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="past-papers" data-year="2020">
+                    <img src="images/13.png" alt="2020六级真题" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">2020六级真题</h3>
+                    </div>
+                </div>
+                
+                <!-- 写作翻译资源 -->
+                <div class="resource-card" data-type="cet4" data-resource-type="writing" data-year="2024">
+                    <img src="images/8.png" alt="四级写作模板" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">四级写作模板</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="writing" data-year="2024">
+                    <img src="images/10.png" alt="六级写作模板" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">六级写作模板</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet4" data-resource-type="writing" data-year="2023">
+                    <img src="images/9.png" alt="四级翻译技巧" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">四级翻译技巧</h3>
+                    </div>
+                </div>
+                <div class="resource-card" data-type="cet6" data-resource-type="writing" data-year="2023">
+                    <img src="images/7.png" alt="六级翻译技巧" class="resource-image" style="object-fit: contain;">
+                    <div class="resource-info">
+                        <h3 class="resource-title">六级翻译技巧</h3>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- 分页控件 -->
+            <section class="pagination">
+                <button class="page-btn prev-page"><i class="fa fa-chevron-left"></i></button>
+                <button class="page-btn next-page"><i class="fa fa-chevron-right"></i></button>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- 品牌和联系方式 -->
+            <div class="footer-brand-section">
+                <div class="footer-brand">
+                    <div class="logo-container">
+                        <img src="images/未标题-2.png" width="45" height="45">
+                        <h3 class="logo-text">CKT</h3>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    专属城科的四六级学习平台，为您提供优质的备考资源和交流环境
+                </p>
+                <div class="footer-contact">
+                    
+                </div>
+                <!-- 社交媒体链接 -->
+                
+            </div>
+            
+            <!-- 快速链接 -->
+            <div class="footer-links-container">
+                <div class="footer-links-group">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa fa-home"></i> 首页</a></li>
+                        <li><a href="courses.html"><i class="fa fa-book"></i> 课程中心</a></li>
+                        <li><a href="forum.html"><i class="fa fa-comments"></i> 备考论坛</a></li>
+                        <li><a href="activities.html"><i class="fa fa-calendar"></i> 线下活动</a></li>
+                        <li><a href="resources.html"><i class="fa fa-wrench"></i> 资源工具箱</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 学习资源 -->
+                <div class="footer-links-group">
+                    <h4>学习资源</h4>
+                    <ul>
+                        <li><a href="resources.html"><i class="fa fa-file-text"></i> 真题资料</a></li>
+                        <li><a href="resources.html"><i class="fa fa-book"></i> 词汇语法</a></li>
+                        <li><a href="resources.html"><i class="fa fa-headphones"></i> 听力素材</a></li>
+                        <li><a href="resources.html"><i class="fa fa-pencil"></i> 写作模板</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 关于我们 -->
+                <div class="footer-links-group">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-info-circle"></i> 平台介绍</a></li>
+                        <li><a href="#"><i class="fa fa-users"></i> 团队成员</a></li>
+                        <li><a href="#"><i class="fa fa-handshake-o"></i> 合作联系</a></li>
+                        <li><a href="#"><i class="fa fa-shield"></i> 隐私政策</a></li>
+                        <li><a href="#"><i class="fa fa-file-text-o"></i> 使用条款</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部版权信息 -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 CKT. 保留所有权利.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+    <!-- JavaScript 交互 -->
+    <script>
+        // 轮播图不再需要交互，因为只有一个推荐项
+        
+        // 筛选功能
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        let resourceCards = document.querySelectorAll('.resource-card');
+        
+        let currentFilter = 'all';
+        let currentResourceType = 'all';
+        let currentYear = 'all';
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 移除同组按钮的active类
+                const parentGroup = btn.closest('.filter-group');
+                parentGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                
+                // 添加当前按钮的active类
+                btn.classList.add('active');
+                
+                // 更新筛选条件
+                if (btn.hasAttribute('data-filter')) {
+                    currentFilter = btn.getAttribute('data-filter');
+                } else if (btn.hasAttribute('data-resource-type')) {
+                    currentResourceType = btn.getAttribute('data-resource-type');
+                } else if (btn.hasAttribute('data-year')) {
+                    currentYear = btn.getAttribute('data-year');
+                }
+                
+                // 应用筛选
+                filterResources();
+            });
+        });
+        
+        // 分页功能
+        const prevPageBtn = document.querySelector('.prev-page');
+        const nextPageBtn = document.querySelector('.next-page');
+        let currentPage = 1;
+        const itemsPerPage = 15;
+        let filteredCards = [];
+        let totalPages = 1;
+        
+        // 初始化分页
+        function initPagination() {
+            // 获取所有资源卡片
+            resourceCards = document.querySelectorAll('.resource-card');
+            
+            // 过滤出当前显示的卡片
+            filteredCards = Array.from(resourceCards).filter(card => card.style.display !== 'none');
+            
+            // 计算总页数
+            totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+            
+            // 显示第一页
+            showPage(1);
+            // 更新分页按钮状态
+            updatePaginationButtons();
+        }
+        
+        // 显示指定页码的资源卡片
+        function showPage(pageNumber) {
+            // 隐藏所有资源卡片
+            resourceCards.forEach(card => card.style.display = 'none');
+            
+            // 计算当前页应该显示的卡片范围
+            const startIndex = (pageNumber - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            
+            // 显示当前页的卡片
+            filteredCards.slice(startIndex, endIndex).forEach(card => card.style.display = 'block');
+            
+            // 更新当前页码
+            currentPage = pageNumber;
+        }
+        
+        // 更新分页按钮状态
+        function updatePaginationButtons() {
+            // 更新上一页按钮的禁用状态
+            prevPageBtn.disabled = currentPage === 1;
+            
+            // 更新下一页按钮的禁用状态
+            nextPageBtn.disabled = currentPage === totalPages;
+        }
+        
+        // 上一页按钮点击事件
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                showPage(currentPage - 1);
+                updatePaginationButtons();
+            }
+        });
+        
+        // 下一页按钮点击事件
+        nextPageBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+                updatePaginationButtons();
+            }
+        });
+        
+        // 筛选并分页显示资源卡片
+        function filterResources() {
+            // 首先显示所有卡片
+            resourceCards.forEach(card => card.style.display = 'block');
+            
+            // 应用筛选条件
+            resourceCards.forEach(card => {
+                const cardType = card.getAttribute('data-type');
+                const cardResourceType = card.getAttribute('data-resource-type');
+                const cardYear = card.getAttribute('data-year');
+                
+                if ((currentFilter === 'all' || cardType === currentFilter) && 
+                    (currentResourceType === 'all' || cardResourceType === currentResourceType) &&
+                    (currentYear === 'all' || cardYear === currentYear)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // 重新初始化分页
+            initPagination();
+        }
+        
+        // 搜索功能
+        const searchBox = document.querySelector('.search-box');
+        
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            resourceCards.forEach(card => {
+                const title = card.querySelector('.resource-title').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // 资源卡片点击效果
+        resourceCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('.resource-title').textContent;
+                alert(`正在打开: ${title}`);
+                // 实际项目中可以跳转到资源详情页
+            });
+        });
+        
+        // 页面加载完成后初始化分页
+        document.addEventListener('DOMContentLoaded', () => {
+            initPagination();
+        });
+    </script>
+</body>
+</html>
